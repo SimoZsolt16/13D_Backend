@@ -1,17 +1,6 @@
 import React from 'react';
 
-function UserRow
-({
-    user,
-    editingId,
-    editedName,
-    editedEmail,
-    onEditStart,
-    onEditCancel,
-    onEditChange,
-    onUpdate,
-    onDelete,
-})
+function UserRow({ user, editingId, editedName, editedEmail, onEditStart, onEditCancel, onEditChange, onUpdate, onDelete, })
 {
     const tableCellStyle = { border: '1px solid #ccc', padding: '10px', textAlign: 'left' };
     const saveButtonStyle = { padding: '5px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer', marginRight: '5px' };
@@ -25,18 +14,10 @@ function UserRow
             {editingId === user.id ? (
                 <>
                     <td style={tableCellStyle}>
-                        <input
-                            type="text"
-                            value={editedName}
-                            onChange={(e) => onEditChange('name', e.target.value)}
-                        />
+                        <input type="text" value={editedName} onChange={(e) => onEditChange('name', e.target.value)} />
                     </td>
                     <td style={tableCellStyle}>
-                        <input
-                            type="email"
-                            value={editedEmail}
-                            onChange={(e) => onEditChange('email', e.target.value)}
-                        />
+                        <input type="email" value={editedEmail} onChange={(e) => onEditChange('email', e.target.value)} />
                     </td>
                 </>
             ) : (

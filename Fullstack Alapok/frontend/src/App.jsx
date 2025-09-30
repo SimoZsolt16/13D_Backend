@@ -7,126 +7,155 @@ import UserTable from './components/UserTable';
 
 import './App.css';
 
-function App() {
+function App()
+{
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [currentPage, setCurrentPage] = useState('home');
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+
     const [editingId, setEditingId] = useState(null);
     const [editedName, setEditedName] = useState('');
     const [editedEmail, setEditedEmail] = useState('');
-    const [currentPage, setCurrentPage] = useState('home'); // Új állapot az aktuális oldalhoz
 
-    const fetchData = async () => {
+
+    const fetchData = async () =>
+    {
         setLoading(true);
-        try {
+
+        try
+        {
             const response = await axios.get('http://localhost:3001/api/users');
             setUsers(response.data);
             setError(null);
-        } catch (err) {
+        }
+        catch (err)
+        {
             setError("Nem sikerült betölteni az adatokat.");
-        } finally {
+        }
+        finally
+        {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         fetchData();
     }, []);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event) =>
+    {
         event.preventDefault();
-        if (!name || !email) {
+
+        if (!name || !email)
+        {
             alert("A név és az email megadása kötelező!");
             return;
         }
-        try {
+
+        try
+        {
             await axios.post('http://localhost:3001/api/users', { name, email });
             fetchData();
             setName('');
             setEmail('');
-        } catch {
+        }
+        catch
+        {
             setError("Hiba történt a felhasználó hozzáadása közben.");
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id) =>
+    {
         if (!window.confirm(`Biztosan törölni szeretnéd a(z) ${id} ID-jű felhasználót?`)) return;
-        try {
+
+        try
+        {
             await axios.delete(`http://localhost:3001/api/users/${id}`);
             fetchData();
-        } catch {
+        }
+        catch
+        {
             setError("Nem sikerült törölni a felhasználót.");
         }
     };
 
-    const handleEditStart = (user) => {
+    const handleEditStart = (user) =>
+    {
         setEditingId(user.id);
         setEditedName(user.name);
         setEditedEmail(user.email);
     };
 
-    const handleEditCancel = () => {
+    const handleEditCancel = () =>
+    {
         setEditingId(null);
     };
 
-    const handleEditChange = (field, value) => {
+    const handleEditChange = (field, value) =>
+    {
         if (field === 'name') setEditedName(value);
         if (field === 'email') setEditedEmail(value);
     };
 
-    const handleUpdate = async (id) => {
-        if (!editedName || !editedEmail) {
+    const handleUpdate = async (id) =>
+    {
+        if (!editedName || !editedEmail)
+        {
             alert("A név és az email mező kitöltése kötelező!");
             return;
         }
-        try {
-            await axios.patch(`http://localhost:3001/api/users/${id}`, {
+
+        try
+        {
+            await axios.patch(`http://localhost:3001/api/users/${id}`,
+            {
                 name: editedName,
                 email: editedEmail,
             });
+
             setEditingId(null);
             fetchData();
-        } catch {
+        }
+        catch
+        {
             setError("Nem sikerült módosítani a felhasználót.");
         }
     };
 
-    const renderPage = () => {
-        if (currentPage === 'home') {
+    const renderPage = () =>
+    {
+        if (currentPage === 'home')
+        {
             if (loading) return <p>Adatok betöltése...</p>;
             if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
             return (
                 <>
-                    <UserForm
-                        name={name}
-                        email={email}
-                        onNameChange={(e) => setName(e.target.value)}
-                        onEmailChange={(e) => setEmail(e.target.value)}
-                        onSubmit={handleSubmit}
-                    />
-                    <hr />
-                    <UserTable
-                        users={users}
-                        editingId={editingId}
-                        editedName={editedName}
-                        editedEmail={editedEmail}
-                        onEditStart={handleEditStart}
-                        onEditCancel={handleEditCancel}
-                        onEditChange={handleEditChange}
-                        onUpdate={handleUpdate}
-                        onDelete={handleDelete}
-                    />
+                    <UserTable users={users} editingId={editingId} editedName={editedName} editedEmail={editedEmail} onEditStart={handleEditStart} onEditCancel={handleEditCancel} onEditChange={handleEditChange} onUpdate={handleUpdate} onDelete={handleDelete} />
                 </>
             );
-        } else if (currentPage === 'about') {
+        }
+        else if (currentPage === 'register')
+        {
+            return <UserForm name={name} email={email} onNameChange={(e) => setName(e.target.value)} onEmailChange={(e) => setEmail(e.target.value)} onSubmit={handleSubmit} />
+        }
+        else if (currentPage === 'about')
+        {
             return <p>Ez az alkalmazás egy egyszerű felhasználókezelő rendszer.</p>;
-        } else if (currentPage === 'contact') {
+        }
+        else if (currentPage === 'contact')
+        {
             return <p>Kapcsolat: admin@felhasznalokezelo.hu</p>;
         }
     };
+
 
     return (
         <div className="App">

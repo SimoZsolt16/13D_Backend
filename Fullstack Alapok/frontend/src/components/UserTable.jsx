@@ -1,18 +1,7 @@
 import React from 'react';
 import UserRow from './UserRow';
 
-function UserTable
-({
-    users,
-    editingId,
-    editedName,
-    editedEmail,
-    onEditStart,
-    onEditCancel,
-    onEditChange,
-    onUpdate,
-    onDelete,
-})
+function UserTable({ users, editingId, editedName, editedEmail, onEditStart, onEditCancel, onEditChange, onUpdate, onDelete,})
 {
     const tableHeaderStyle = { border: '1px solid #ccc', padding: '10px', backgroundColor: '#f0f0f0' };
     const noUsersCellStyle = { border: '1px solid #ccc', padding: '10px', textAlign: 'center' };
@@ -31,18 +20,7 @@ function UserTable
             <tbody>
                 {users.length > 0 ? (
                     users.map((user) => (
-                        <UserRow
-                            key={user.id}
-                            user={user}
-                            editingId={editingId}
-                            editedName={editedName}
-                            editedEmail={editedEmail}
-                            onEditStart={onEditStart}
-                            onEditCancel={onEditCancel}
-                            onEditChange={onEditChange}
-                            onUpdate={onUpdate}
-                            onDelete={onDelete}
-                        />
+                        <UserRow key={user.id} user={user} editingId={editingId} editedName={editedName} editedEmail={editedEmail} onEditStart={onEditStart} onEditCancel={onEditCancel} onEditChange={onEditChange} onUpdate={onUpdate} onDelete={onDelete} />
                     ))
                 ) : (
                     <tr>
