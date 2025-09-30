@@ -1,2 +1,3 @@
 # Panzió kezelőfelület
-**1. Mire alkalmatos:** Ez kezeli a panzióra regisztrált adatokat. Fel lehet venni új regisztrációt, szerkezteni lehet, és el lehet távolítani.
+## ** 1. Mire alkalmatos:**
+Ez kezeli a panzióra regisztrált adatokat. Fel lehet venni új regisztrációt, szerkezteni lehet, és el lehet távolítani.
